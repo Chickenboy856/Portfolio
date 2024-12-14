@@ -1,166 +1,161 @@
-const canvas = document.getElementById("pong");
-const ctx = canvas.getContext("2d");
+let rock = document.querySelector(".rock");
+let paper = document.querySelector(".paper");
+let scissors = document.querySelector(".scissors");
+const choices = [rock, paper, scissors];
 
-const paddleWidth = 10,
-  paddleHeight = 40;
-const ballRadius = 8;
-const playerSpeed = 4.5;
-const computerSpeed = 2.5;
-const color = "#FFF";
-
-const player = {
-  x: 0,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  speed: playerSpeed,
-  color: color,
-  dy: 0,
-};
-
-const computer = {
-  x: canvas.width - paddleWidth,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  speed: computerSpeed,
-  color: color,
-};
-
-const ball = {
-  x: canvas.width / 2,
-  y: canvas.height / 2,
-  radius: ballRadius,
-  speedX: 5 * (Math.random() < 0.5 ? 1 : -1),
-  speedY: 5 * (Math.random() < 0.5 ? 1 : -1),
-  color: color,
-};
-
-let playerScore = 0;
-let computerScore = 0;
-
-function drawPaddle(x, y, width, height, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, width, height);
+function disableEvent() {
+  rock.removeEventListener("click", rockPick);
+  paper.removeEventListener("click", paperPick);
+  scissors.removeEventListener("click", scissorsPick);
 }
 
-function drawBall(x, y, radius, color) {
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.fill();
+rock.addEventListener("click", rockPick);
+paper.addEventListener("click", paperPick);
+scissors.addEventListener("click", scissorsPick);
+
+//Rock Pick Function
+
+function rockPick() {
+  let randomChoice = Math.floor(Math.random() * choices.length);
+
+  document.getElementById("left-pic").style.animation = "shoot 2s";
+  document.getElementById("right-pic").style.animation = "shoot 2s";
+
+  setTimeout(() => {
+    let leftPic = (document.getElementById("left-pic").src = "rock.png");
+  }, 2000);
+
+  setTimeout(() => {
+    switch (randomChoice) {
+      case 0:
+        document.getElementById("right-pic").src = "rock.png";
+        document.getElementById("winner").innerHTML = "It's a Tie!";
+        break;
+      case 1:
+        document.getElementById("right-pic").src = "paper.png";
+        document.getElementById("winner").innerHTML = "Paper Wins!";
+        break;
+      case 2:
+        document.getElementById("right-pic").src = "scissors.png";
+        document.getElementById("winner").innerHTML = "Rock Wins!";
+        break;
+    }
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("left-pic").style.removeProperty("animation");
+    document.getElementById("right-pic").style.removeProperty("animation");
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("left-pic").src = "rock.png";
+    document.getElementById("right-pic").src = "rock.png";
+    document.getElementById("winner").innerHTML = "Rock Paper Scissors!";
+  }, 4000);
+
+  disableEvent();
+
+  setTimeout(() => {
+    rock.addEventListener("click", rockPick);
+    paper.addEventListener("click", paperPick);
+    scissors.addEventListener("click", scissorsPick);
+  }, 4000);
 }
 
-function drawScore() {
-  ctx.fillStyle = color;
-  ctx.font = "36px 'Roboto', sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(playerScore, canvas.width / 4, 50);
-  ctx.fillText(computerScore, (3 * canvas.width) / 4, 50);
+//Paper Pick Function
+
+function paperPick() {
+  let randomChoice = Math.floor(Math.random() * choices.length);
+
+  document.getElementById("left-pic").style.animation = "shoot 2s";
+  document.getElementById("right-pic").style.animation = "shoot 2s";
+
+  setTimeout(() => {
+    let leftPic = (document.getElementById("left-pic").src = "paper.png");
+  }, 2000);
+
+  setTimeout(() => {
+    switch (randomChoice) {
+      case 0:
+        document.getElementById("right-pic").src = "rock.png";
+        document.getElementById("winner").innerHTML = "Paper Wins!";
+        break;
+      case 1:
+        document.getElementById("right-pic").src = "paper.png";
+        document.getElementById("winner").innerHTML = "It's a Tie!";
+        break;
+      case 2:
+        document.getElementById("right-pic").src = "scissors.png";
+        document.getElementById("winner").innerHTML = "Scissors Win!";
+        break;
+    }
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("left-pic").style.removeProperty("animation");
+    document.getElementById("right-pic").style.removeProperty("animation");
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("left-pic").src = "rock.png";
+    document.getElementById("right-pic").src = "rock.png";
+    document.getElementById("winner").innerHTML = "Rock Paper Scissors!";
+  }, 4000);
+
+  disableEvent();
+
+  setTimeout(() => {
+    rock.addEventListener("click", rockPick);
+    paper.addEventListener("click", paperPick);
+    scissors.addEventListener("click", scissorsPick);
+  }, 4000);
 }
 
-function drawBackground() {
-  ctx.fillStyle = "#1e1e1e";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+//Scissors Pick Function
+
+function scissorsPick() {
+  let randomChoice = Math.floor(Math.random() * choices.length);
+
+  document.getElementById("left-pic").style.animation = "shoot 2s";
+  document.getElementById("right-pic").style.animation = "shoot 2s";
+
+  setTimeout(() => {
+    let leftPic = (document.getElementById("left-pic").src = "scissors.png");
+  }, 2000);
+
+  setTimeout(() => {
+    switch (randomChoice) {
+      case 0:
+        document.getElementById("right-pic").src = "rock.png";
+        document.getElementById("winner").innerHTML = "Rock Wins";
+        break;
+      case 1:
+        document.getElementById("right-pic").src = "paper.png";
+        document.getElementById("winner").innerHTML = "Scissors Win";
+        break;
+      case 2:
+        document.getElementById("right-pic").src = "scissors.png";
+        document.getElementById("winner").innerHTML = "It's a Tie!";
+        break;
+    }
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("left-pic").style.removeProperty("animation");
+    document.getElementById("right-pic").style.removeProperty("animation");
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("left-pic").src = "rock.png";
+    document.getElementById("right-pic").src = "rock.png";
+    document.getElementById("winner").innerHTML = "Rock Paper Scissors!";
+  }, 4000);
+
+  disableEvent();
+
+  setTimeout(() => {
+    rock.addEventListener("click", rockPick);
+    paper.addEventListener("click", paperPick);
+    scissors.addEventListener("click", scissorsPick);
+  }, 4000);
 }
-
-function drawBorders() {
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
-}
-
-function update() {
-  player.y += player.dy;
-
-  if (ball.y < computer.y + computer.height / 2) {
-    computer.y -= computer.speed;
-  } else {
-    computer.y += computer.speed;
-  }
-
-  ball.x += ball.speedX;
-  ball.y += ball.speedY;
-
-  if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
-    ball.speedY = -ball.speedY;
-  }
-
-  if (
-    ball.x - ball.radius < player.x + player.width &&
-    ball.y > player.y &&
-    ball.y < player.y + player.height
-  ) {
-    ball.speedX = -ball.speedX;
-  }
-
-  if (
-    ball.x + ball.radius > computer.x &&
-    ball.y > computer.y &&
-    ball.y < computer.y + computer.height
-  ) {
-    ball.speedX = -ball.speedX;
-  }
-
-  if (ball.x - ball.radius < 0) {
-    computerScore++;
-    resetBall();
-  }
-
-  if (ball.x + ball.radius > canvas.width) {
-    playerScore++;
-    resetBall();
-  }
-
-  if (player.y < 0) player.y = 0;
-  if (player.y + player.height > canvas.height)
-    player.y = canvas.height - player.height;
-  if (computer.y < 0) computer.y = 0;
-  if (computer.y + computer.height > canvas.height)
-    computer.y = canvas.height - computer.height;
-}
-
-function resetBall() {
-  ball.x = canvas.width / 2;
-  ball.y = canvas.height / 2;
-  ball.speedX = 5 * (Math.random() < 0.5 ? 1 : -1);
-  ball.speedY = 5 * (Math.random() < 0.5 ? 1 : -1);
-}
-
-function controlPaddle(e) {
-  if (e.keyCode === 38) {
-    player.dy = -player.speed;
-  } else if (e.keyCode === 40) {
-    player.dy = player.speed;
-  }
-}
-
-function stopPaddle(e) {
-  if (e.keyCode === 38 || e.keyCode === 40) {
-    player.dy = 0;
-  }
-}
-
-document.addEventListener("keydown", controlPaddle);
-document.addEventListener("keyup", stopPaddle);
-
-function gameLoop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBackground();
-  update();
-  drawPaddle(player.x, player.y, player.width, player.height, player.color);
-  drawPaddle(
-    computer.x,
-    computer.y,
-    computer.width,
-    computer.height,
-    computer.color
-  );
-  drawBall(ball.x, ball.y, ball.radius, ball.color);
-  drawScore();
-  drawBorders();
-  requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
